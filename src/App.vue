@@ -1,28 +1,49 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <TodoHeader />
+        <Todos :todos="todos" @del-todo="deleteTodo"/>
+        <AddTodo @add-todo="addTodo"/>
+        <TodoFooter />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import TodoHeader from './components/TodoHeader'
+    import Todos from './components/Todos'
+    import AddTodo from './components/AddTodo'
+    import TodoFooter from './components/TodoFooter'
+    export default {
+        name: 'app',
+        components: {
+            Todos,
+            TodoHeader,
+            TodoFooter,
+            AddTodo
+        },
+        data() {
+            return {
+                todos: []
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+            }
+        },
+        methods: {
+            deleteTodo(id) {
+                this.todos = this.todos.filter(todo => todo.id != id);
+            },
+            addTodo(newTodo) {
+                this.todos.push(newTodo);
+            }
+        }
+    }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+    #app {
+        margin: 100px auto 0 auto;
+        width: 320px;
+        height: auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 1px 1px 4px #e7e7e7;
+    }
 </style>
