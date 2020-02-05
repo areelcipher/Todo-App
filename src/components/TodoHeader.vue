@@ -18,12 +18,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 5px auto 20px auto;
+        margin: 5px auto 0px auto;
         box-sizing: border-box;
         font-family: 'Ubuntu', sans-serif;
+        padding-top: 20px;
     }
     h4 {
         color: #0ccab1;
         font-size: 20px;
+        font-weight: 700;
     }
 </style>

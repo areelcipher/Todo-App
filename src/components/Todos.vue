@@ -1,7 +1,7 @@
 <template>
     <div id="todos">
         <div v-for="todo in todos" :key="todo.id">
-            <TodoItems :todo="todo" @del-todo="$emit('del-todo', todo.id)"/>
+            <TodoItems :todo="todo" @del-todo="$emit('del-todo', todo.id)" @done="$emit('done', todo.id)"/>
         </div>
     </div>
 </template>
@@ -13,6 +13,10 @@
         props: ['todos'],
         components: {
             TodoItems
+        },
+
+        methods: {
+
         }
 
     }

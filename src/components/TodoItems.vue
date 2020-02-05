@@ -1,12 +1,13 @@
 <template>
-    <div id="todo-items" :class="{'is-complete': todo.completed}">
+    <div id="todo-items"  v-if="isDeleted">
         <div id="item">
-            <input type="checkbox" @change="markComplete">
+            <input type="checkbox" @change="completedTask" >
             <div id="task-detail">
-                <p id="task">{{todo.title}}</p>
+                <p id="task" :class="{isComplete: isComplete}" >{{todo.title}}</p>
                 <p id="date">{{todo.month}} {{todo.day}}, {{todo.year}}</p>
+                <p v-if="todo.completed" id="doneTask">Done</p>
             </div>
-            <span @click="$emit('del-todo', todo.id)" id="trash">
+            <span @click="del" id="trash">
                 <i class="fas fa-trash"></i>
             </span>
         </div>
@@ -17,10 +18,20 @@
     export default {
         name: "TodoItems",
         props: ['todo'],
+        data() {
+            return {
+                isComplete: this.todo.completed,
+                isDeleted: true
+            }
+        },
         methods: {
-            markComplete() {
-                // alert(123)
-                this.todo.completed = !this.todo.completed
+            del() {
+                this.isDeleted = false
+                this.$emit('del-todo', this.todo.id)
+            },
+            completedTask() {
+                this.isComplete = !this.isComplete
+                this.$emit('done', this.todo.id)
             }
         }
     }
@@ -46,11 +57,10 @@
         width: 100%;
         color: #0ccab1;
     }
-    .is-complete {
-        border: 2px solid #0ccab1;
-        border-radius: 5px;
+    .isComplete {
+        text-decoration: line-through;
         font-style: italic;
-        font-weight: 100;
+        color: grey;
     }
 
     input {
@@ -59,6 +69,7 @@
     #task-detail {
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
     #trash {
         margin: 0 0 0 auto;
@@ -73,5 +84,9 @@
     #date {
         margin: 0;
         font-size: 10px;
+    }
+    #doneTask {
+        font-size: 10px;
+        margin-bottom: 0;
     }
 </style>
